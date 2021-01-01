@@ -1,5 +1,7 @@
 <template>
-    <div class="backdrop">
+<!-- closeModal is a custom event -->
+<!-- click.self means only if the backdrop is clicked and NOT when any child elements are clicked -->
+    <div class="backdrop" @click.self='closeModal'>
         <!-- checks theme prop. Since it is sale then add the class sale -->
         <div class="modal" :class="{sale: theme === 'sale'}">
             <h1>{{header}}</h1>
@@ -11,7 +13,13 @@
 <script>
 // how to accepts props from parent components
 export default{
-    props:['header', 'text', 'theme']
+    props:['header', 'text', 'theme'],
+    methods:{
+        // this method can now be used in the parent component because of $emit
+        closeModal(){
+            this.$emit('close')
+        }
+    }
 }
 </script>
 

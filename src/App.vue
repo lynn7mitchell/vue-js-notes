@@ -1,9 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <h1>{{ words }}</h1>
+  <p>Welcome...</p>
   <!-- header is a prop just like in react -->
   <!-- you can use the colon to data bind to whatever you want such as the data object -->
-  <Modal :header='header' :text="text" theme='sale'/>
+  <div v-if='showModal'>
+    <!-- @close is a custom event listener that was created in Modal.vue -->
+    <Modal :header='header' :text="text" theme='sale' @close="toggleModal"/>
+  </div>
+  <!-- 
+    only fire the function if the click is a right click
+  
+    @click.shift will make the function fire only if the user is holding shift when the button is clicked
+   -->
+  <button @click.right="toggleModal">open modal</button>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
 
   <!-- ref is similar to a query selector document.getElementById -->
@@ -28,7 +38,8 @@ export default {
     return {
       words: "Words from the data function!",
       header: 'Message from app component',
-      text: 'Some text from the app component'
+      text: 'Some text from the app component',
+      showModal: false
     };
   },
   // this = the current component
@@ -38,6 +49,9 @@ export default {
       console.log(this.$refs.name);
       this.$refs.name.classList.add('active')
       this.$refs.name.focus()
+    },
+    toggleModal(){
+      this.showModal = !this.showModal
     }
   }
 };
