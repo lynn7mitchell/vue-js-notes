@@ -4,8 +4,12 @@
     <div class="backdrop" @click.self='closeModal'>
         <!-- checks theme prop. Since it is sale then add the class sale -->
         <div class="modal" :class="{sale: theme === 'sale'}">
-            <h1>{{header}}</h1>
-            <p>{{text}}</p>
+            <!-- <h1>{{header}}</h1>
+            <p>{{text}}</p> -->
+            <slot>default content. this text will only show up if there isnt a slot sent to this component (not named)</slot>
+            <div class="actions">
+                <slot name='links'></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -13,7 +17,8 @@
 <script>
 // how to accepts props from parent components
 export default{
-    props:['header', 'text', 'theme'],
+    // props:['header', 'text', 'theme'],
+    props:['theme'],
     methods:{
         // this method can now be used in the parent component because of $emit
         closeModal(){
@@ -46,6 +51,14 @@ h1{
     border: none;
     padding: 0;
 }
+.modal .actions a {
+    color: #333;
+    padding: 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 10px;
+}
 .modal.sale{
     background: crimson;
     color: #fff
@@ -53,4 +66,10 @@ h1{
 .modal.sale h1{
     color: #fff
 }
+.modal.sale .actions {
+   color: white;
+ }
+ .modal.sale .actions a {
+    color: white;
+ }
 </style>
