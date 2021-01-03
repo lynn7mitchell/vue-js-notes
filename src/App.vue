@@ -4,14 +4,14 @@
   <p>Welcome...</p>
   <!-- header is a prop just like in react -->
   <!-- you can use the colon to data bind to whatever you want such as the data object -->
-  <div v-if='showModal'>
+  <teleport to="#modals" v-if="showModal">
     <!-- @close is a custom event listener that was created in Modal.vue -->
     <!-- <Modal :header='header' :text="text" theme='sale' @close="toggleModal"/> -->
 
-  <!-- slots
+    <!-- slots
   
      whatever is inside the Modal tags will show up in a slot tag in the Modal component-->
-    <Modal theme='sale' @close="toggleModal(1)">
+    <Modal theme="sale" @close="toggleModal">
       <h1>Title</h1>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 
@@ -20,14 +20,14 @@
       the name of this slot is "links" and will show up in a slot tag with name='links' in the Modal component-->
       <template v-slot:links>
         <a href="#">a link</a>
-        <br>
+        <br />
         <a href="#">another link</a>
       </template>
     </Modal>
-  </div>
+  </teleport>
 
-  <div v-if='showModal2'>
-    <Modal theme='sale' @close="toggleModal(2)">
+  <teleport to="#modals" v-if="showModalTwo">
+    <Modal theme="sale" @close="toggleModalTwo">
       <h1>Modal 2</h1>
       <p>Welcome to modal 2</p>
       <!-- <template v-slot:links>
@@ -36,14 +36,14 @@
         <a href="#">another different link</a>
       </template> -->
     </Modal>
-  </div>
+  </teleport>
   <!-- 
     only fire the function if the click is a right click
   
     @click.shift will make the function fire only if the user is holding shift when the button is clicked
    -->
-  <button @click.shift="toggleModal(1)">open modal</button>
-  <button @click.shift="toggleModal(2)">open modal 2</button>
+  <button @click.shift="toggleModal">open modal</button>
+  <button @click.shift="toggleModalTwo">open modal 2</button>
 
   <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
 
@@ -71,7 +71,7 @@ export default {
       header: 'Message from app component',
       text: 'Some text from the app component',
       showModal: false,
-      showModal2: false
+      showModalTwo: false
     };
   },
   // this = the current component
@@ -82,21 +82,18 @@ export default {
       this.$refs.name.classList.add('active')
       this.$refs.name.focus()
     },
-    toggleModal(num){
-      // num === 1 ? this.showModal = !this.showModal : 
-      if(num === 1){
-        this.showModal = !this.showModal
-      }else if(num === 2){
-        this.showModal2 = !this.showModal2
-      }
-    }
+  toggleModal(){
+    this.showModal = !this.showModal
+  },
+   toggleModalTwo(){
+    this.showModalTwo = !this.showModalTwo
   }
-};
+},}
 </script>
 
 <style>
 /* styles are global (not just for this component) */
-#app {
+#app, #modals {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -104,7 +101,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-h1{
+h1 {
   border-bottom: 1px solid #ddd;
   display: inline-block;
   padding-bottom: 10px;

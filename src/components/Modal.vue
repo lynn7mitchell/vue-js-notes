@@ -1,7 +1,16 @@
 <template>
-<!-- closeModal is a custom event -->
-<!-- click.self means only if the backdrop is clicked and NOT when any child elements are clicked -->
+
     <div class="backdrop" @click.self='closeModal'>
+<!-- THE TWO COMMENTS BELOW USED TO BE ABOVE THE DIV ABOVE THIS COMMENT
+THIS CAUSED AN ERROR WHERE THE MODAL WOULD NOT CLOSE WHEN THE PARENT IS USING
+A TELEPORT TAG 
+
+https://www.udemy.com/course/build-web-apps-with-vuejs-firebase/learn/lecture/23541728#questions/13478624
+-->
+
+        <!-- closeModal is a custom event -->
+        <!-- click.self means only if the backdrop is clicked and NOT when any child elements are clicked -->
+        
         <!-- checks theme prop. Since it is sale then add the class sale -->
         <div class="modal" :class="{sale: theme === 'sale'}">
             <!-- <h1>{{header}}</h1>
