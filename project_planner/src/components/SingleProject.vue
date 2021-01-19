@@ -5,7 +5,9 @@
       <h3 @click="showDetails = !showDetails">{{ project.title }}</h3>
       <div class="icons">
         <span @click="deleteProject" class="material-icons">delete</span>
-        <span class="material-icons">edit</span>
+        <router-link :to="{ name: 'EditProject', params: { id: project.id } }">
+          <span class="material-icons">edit</span>
+        </router-link>
         <span class="material-icons tick" @click="toggleComplete">done</span>
       </div>
     </div>
@@ -76,7 +78,7 @@ h3 {
 .project.complete {
   border-left: 4px solid #00ce89;
 }
-.project.complete .tick{
-  color:  #00ce89;
+.project.complete .tick {
+  color: #00ce89;
 }
 </style>
