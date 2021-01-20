@@ -1,9 +1,15 @@
 <template>
   <div class="home">
+    <!-- $event is the value that is emitted (by) -->
+    <FilterNav @filterChange="currentFilter = $event" :currentFilter="currentFilter"/>
     <!-- if the projects array has anything in it -->
     <div v-if="projects.length">
-      <div v-for="project in projects" :key="project.id">
-        <SingleProject :project="project" @delete="handleDelete" @complete="handleComplete"/>
+      <div v-for="project in filteredProjects" :key="project.id">
+        <SingleProject
+          :project="project"
+          @delete="handleDelete"
+          @complete="handleComplete"
+        />
       </div>
     </div>
   </div>
@@ -12,12 +18,15 @@
 <script>
 // @ is an alias to /src
 import SingleProject from "@/components/SingleProject.vue";
+import FilterNav from "@/components/FilterNav.vue";
+
 export default {
   name: "Home",
-  components: { SingleProject },
+  components: { SingleProject, FilterNav },
   data() {
     return {
       projects: [],
+      currentFilter: "all",
     };
   },
   //  componentDidMount()
@@ -33,12 +42,23 @@ export default {
         return project.id !== id;
       });
     },
-    handleComplete(id){
-      let p = this.projects.find(project => {
-        return project.id === id
-      })
-      p.complete = !p.complete
-    }
+    handleComplete(id) {
+      let p = this.projects.find((project) => {
+        return project.id === id;
+      });
+      p.complete = !p.complete;
+    },
   },
+  computed: {
+    filteredProjects(){
+      if(this.currentFilter === 'completed'){
+        return this.projects.filter(project => project.complete)
+      }
+      if(this.currentFilter === 'ongoing'){
+        return this.projects.filter(project => !project.complete)
+      }
+      return this.projects
+    }
+  }
 };
 </script>

@@ -44,6 +44,7 @@ export default {
         this.details = data.details;
       });
   },
+  
 };
 </script>
 
