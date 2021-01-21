@@ -1,12 +1,22 @@
 <template>
   <div class="home">
-    <p ref="paragraph">My name is {{ name }} and my age is {{ 35 }}</p>
-    <button @click="handleClick">Click Me</button>
+    <h1>Home</h1>
+
+    <!-- refs -->
+    <h2>Refs</h2>
+    <p>{{ refNinja.name }} - {{ refNinja.age }}</p>
+    <button @click="updateRefNinja">Update Ref Ninja</button>
+
+    <!-- reactive -->
+    <h2>Reactive</h2>
+    <p>{{ reactiveNinja.name }} - {{ reactiveNinja.age }} - {{nameTwo}}</p>
+    <button @click="updateReactiveNinja">Update Reactive Ninja</button>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+// REFS > REACTIVE
+import { ref, reactive } from "vue";
 
 export default {
   name: "Home",
@@ -17,29 +27,32 @@ export default {
     // this is undefined
     console.log(this);
 
-    // if these values are changed they will not reflect in the component
-    // the data() function would change
-    let name = "mario";
-    let age = 30;
+    const refNinja = ref({ name: "mario", age: 35 });
+    const reactiveNinja = ref({ name: "luigi", age: 34 });
 
-    // ref will return an object.
-    // $ref is similar to document.getElementById
-    // this.$ref.paragraph is used in the options api
-    // You CAN NOT grab the element before it is returned since it has not rendered yet. That is why it is set to 'null'
-    const paragraph = ref(null);
+    const nameOne = ref('mario')
+    // CAN NOT be updated beacuse a primitive value will not work with reactive()
+    const nameTwo = reactive('luigi')
 
-    const handleClick = () => {
-      console.log(paragraph, paragraph.value);
-      paragraph.value.classList.add("test");
-      paragraph.value.textContent = 'Hello, from the handleClick funtion!'
+    // you HAVE to use value with refs
+    const updateRefNinja = () => {
+      refNinja.value.age = 45;
+    };
+    // you DO NOT use value with reactive
+    const updateReactiveNinja = () => {
+      reactiveNinja.age = 44;
+    //   Will not work because a primitive values will not work with reactive()
+      nameTwo = 'yoshi'
     };
 
     // variables and functions must be returned
     return {
-      name,
-      age,
-      handleClick,
-      paragraph,
+      refNinja,
+      reactiveNinja,
+      updateRefNinja,
+      updateReactiveNinja,
+      nameOne,
+      nameTwo
     };
   },
 };
