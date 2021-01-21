@@ -1,59 +1,37 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-
-    <!-- refs -->
-    <h2>Refs</h2>
-    <p>{{ refNinja.name }} - {{ refNinja.age }}</p>
-    <button @click="updateRefNinja">Update Ref Ninja</button>
-
-    <!-- reactive -->
-    <h2>Reactive</h2>
-    <p>{{ reactiveNinja.name }} - {{ reactiveNinja.age }} - {{nameTwo}}</p>
-    <button @click="updateReactiveNinja">Update Reactive Ninja</button>
+    <input type="text" v-model="search" />
+    <p>Search Term - {{ search }}</p>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
   </div>
 </template>
 
 <script>
-// REFS > REACTIVE
-import { ref, reactive } from "vue";
-
+import { computed, ref, watch, watchEffect } from "vue";
 export default {
   name: "Home",
-  // setup will run before anything else (created(), mounted(), etc...)
-  // you CAN NOT use $ref in the setup() function
-
   setup() {
-    // this is undefined
-    console.log(this);
+    const search = ref("");
+    const names = ref(["mario", "luigi", "toad", "bowser", "koopa", "peach"]);
 
-    const refNinja = ref({ name: "mario", age: 35 });
-    const reactiveNinja = ref({ name: "luigi", age: 34 });
+    // every time the search function changes it will run the function in the second argument
+    watch(search, () => {
+      console.log("watch funtion run");
+    });
 
-    const nameOne = ref('mario')
-    // CAN NOT be updated beacuse a primitive value will not work with reactive()
-    const nameTwo = reactive('luigi')
+    // runs initially on setup but not again if there is not a second argument (what to watch)
+    // similar to useEffect
+    watchEffect(() => {
+      console.log("watchEffect function run", search.value);
+    });
 
-    // you HAVE to use value with refs
-    const updateRefNinja = () => {
-      refNinja.value.age = 45;
-    };
-    // you DO NOT use value with reactive
-    const updateReactiveNinja = () => {
-      reactiveNinja.age = 44;
-    //   Will not work because a primitive values will not work with reactive()
-      nameTwo = 'yoshi'
-    };
-
-    // variables and functions must be returned
-    return {
-      refNinja,
-      reactiveNinja,
-      updateRefNinja,
-      updateReactiveNinja,
-      nameOne,
-      nameTwo
-    };
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value));
+    });
+    return { names, search, matchingNames };
   },
 };
 </script>
+
+<style></style>
