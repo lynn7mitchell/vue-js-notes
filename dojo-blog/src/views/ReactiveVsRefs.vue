@@ -1,6 +1,6 @@
 <template>
   <div class="reactive-vs-refs">
-    <h1>Home</h1>
+    <h1>Reactive vs Refs</h1>
 
     <!-- refs -->
     <h2>Refs</h2>

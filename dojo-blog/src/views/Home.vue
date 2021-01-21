@@ -1,35 +1,35 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-    <input type="text" v-model="search" />
-    <p>Search Term - {{ search }}</p>
-    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
-  </div>
+  <h1>Home</h1>
+  <PostList :posts="posts" v-if='showPosts' />
+  <button @click="showPosts = !showPosts">toggle posts</button>    
+  <button @click="posts.pop()">delete a post!</button>
 </template>
 
 <script>
-import { computed, ref, watch, watchEffect } from "vue";
+import { ref } from "vue";
+import PostList from "../components/PostList.vue";
 export default {
   name: "Home",
+  components: { PostList },
   setup() {
-    const search = ref("");
-    const names = ref(["mario", "luigi", "toad", "bowser", "koopa", "peach"]);
+    const posts = ref([
+      {
+        title: "welcome to the blog",
+        body:
+          "Bacon ipsum dolor amet sausage pig beef turkey strip steak. Short ribs shank spare ribs, turducken flank beef boudin. Shank kielbasa chislic prosciutto beef shankle. Swine landjaeger jerky tail shank, kielbasa buffalo doner salami shoulder cupim ground round frankfurter beef ribs. Swine fatback meatloaf ground round, hamburger ball tip pork loin kevin. Biltong beef turducken, brisket meatball picanha meatloaf doner leberkas jerky andouille sirloin shoulder.",
+        id: 1,
+      },
+      {
+        title: "top 5 CSS tips",
+        body:
+          "Bacon ipsum dolor amet sausage pig beef turkey strip steak. Short ribs shank spare ribs, turducken flank beef boudin. Shank kielbasa chislic prosciutto beef shankle. Swine landjaeger jerky tail shank, kielbasa buffalo doner salami shoulder cupim ground round frankfurter beef ribs. Swine fatback meatloaf ground round, hamburger ball tip pork loin kevin. Biltong beef turducken, brisket meatball picanha meatloaf doner leberkas jerky andouille sirloin shoulder.",
+        id: 2,
+      },
+    ]);
 
-    // every time the search function changes it will run the function in the second argument
-    watch(search, () => {
-      console.log("watch funtion run");
-    });
+    const showPosts = ref(true)
 
-    // runs initially on setup but not again if there is not a second argument (what to watch)
-    // similar to useEffect
-    watchEffect(() => {
-      console.log("watchEffect function run", search.value);
-    });
-
-    const matchingNames = computed(() => {
-      return names.value.filter((name) => name.includes(search.value));
-    });
-    return { names, search, matchingNames };
+    return { posts, showPosts };
   },
 };
 </script>

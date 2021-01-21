@@ -1,5 +1,6 @@
 <template>
   <div class="refs">
+    <h1>refs</h1>
     <p ref="paragraph">My name is {{ name }} and my age is {{ age }}</p>
     <p ref="reactiveParagraph">
       My name is {{ refName }} and my age is {{ refAge }}
