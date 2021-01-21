@@ -1,0 +1,10 @@
+Options API
+
+ -vue 2
+ - data, methods, computed, lifecycle are all working separately 
+
+ Composition API
+
+ -vue 3
+ -Group logic together in a setup functions
+ -Create reusable logic (functions)
