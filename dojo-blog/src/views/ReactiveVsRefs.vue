@@ -19,7 +19,7 @@
 import { ref, reactive } from "vue";
 
 export default {
-  name: "ReactiveVsRefs",
+  name: "reactive_vs_refs",
   // setup will run before anything else (created(), mounted(), etc...)
   // you CAN NOT use $ref in the setup() function
 
