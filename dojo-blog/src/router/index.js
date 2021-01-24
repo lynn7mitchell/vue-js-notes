@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import Details from "../views/Details.vue";
+
+
+
 import ComputedWatchWatchEffect from "../views/computed_watch_watchEffect.vue";
 import ReactiveVsRefs from "../views/ReactiveVsRefs.vue";
 import Refs from "../views/Refs.vue";
@@ -9,6 +13,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/posts/:id",
+    name: "Details",
+    component: Details,
+    props: true
   },
   {
     path: "/computed_watch_watchEffect",
